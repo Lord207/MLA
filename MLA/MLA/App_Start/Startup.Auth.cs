@@ -4,8 +4,9 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
+using MLA.DAL;
+using MLA.Model;
 using Owin;
-using MLA.Models;
 
 namespace MLA
 {
