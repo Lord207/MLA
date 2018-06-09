@@ -10,7 +10,7 @@ namespace MLA.DAL
 {
 
 
-  public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+  public class ApplicationDbContext : IdentityDbContext<User>
   {
     public ApplicationDbContext()
       : base("DBConnection", throwIfV1Schema: false)

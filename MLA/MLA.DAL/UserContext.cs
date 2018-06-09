@@ -8,20 +8,18 @@ using MLA.Model;
 
 namespace MLA.DAL
 {
-  public class UserContext : DbContext
-  {
+  //public class UserContext : DbContext
+  //{
 
-    public UserContext()
-      : base("DbConnection")
-    {
-      //
-    }
-
-
-    public DbSet<User> Users { get; set; }
+  //  public UserContext()
+  //    : base("DbConnection")
+  //  {
+  //    //
+  //  }
 
 
+  //  public DbSet<User> Users { get; set; }
+    
+  //}
 
-
-  }
 }

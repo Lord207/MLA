@@ -22,3 +22,26 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+
+.main-mnu {
+  position: absolute;
+  top: 35px;
+  width: 200px;
+  background-color: whitesmoke;
+  border: solid 3px silver;
+  border-radius: 3px;
+  z-index: 1;
+}
+
+  .main-mnu li {
+    padding: 1px 5px;
+    transition: all .2s ease 0s;
+  }
+    .main-mnu li:hover { background-color: #007bff; }
+      .main-mnu li:hover a {
+        color: white;
+      }
+    .main-mnu li a:hover { text-decoration: none; }
