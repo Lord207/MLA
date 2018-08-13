@@ -15,7 +15,7 @@ namespace MLA.Model
   // You can add profile data for the user by adding more properties to your ApplicationUser class,
   // please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
 
-  public class User: IUser<int>
+  public class User: IdentityUser
   {
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
     {
@@ -26,10 +26,11 @@ namespace MLA.Model
     }
 
 
-    public int Id { get; set; }
+    //public string Id { get; set; }
 
-    public string UserName { get; set; }
-
+    //public string UserName { get; set; }
+    
+    //public string Email { get; set; }
 
     public string Phone { get; set; }
 
