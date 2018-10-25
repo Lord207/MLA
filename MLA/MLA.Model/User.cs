@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MLA.Model.Base;
 
+
 namespace MLA.Model
 {
 
@@ -26,13 +27,23 @@ namespace MLA.Model
     }
 
 
+
+    public User(string login, IdentityRole role)
+    {
+      this.UserName = login;
+      //var iur = MLA.Service.
+      //this.Roles.Add(role);
+    }
+
+
+
     //public string Id { get; set; }
 
     //public string UserName { get; set; }
     
     //public string Email { get; set; }
 
-    public string Phone { get; set; }
+    //public string Phone { get; set; }
 
     public DateTime BirthDay { get; set; }
 

@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0F40D35D-6514-4C2A-ABD0-1B47410232AD}</ProjectGuid>
+    <ProjectGuid>{089F38B5-2D27-4BB3-B2FE-319EB656C595}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MLA.Model</RootNamespace>
-    <AssemblyName>MLA.Model</AssemblyName>
+    <RootNamespace>MLA.Service</RootNamespace>
+    <AssemblyName>MLA.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,10 +32,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -53,19 +54,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\DataObject.cs" />
-    <Compile Include="Base\Week.cs" />
-    <Compile Include="Classifier\Classifier.cs" />
-    <Compile Include="Classifier\LearningGroup.cs" />
-    <Compile Include="Classifier\LessonName.cs" />
-    <Compile Include="Classifier\LessonTime.cs" />
-    <Compile Include="Classifier\Room.cs" />
-    <Compile Include="Classifier\Teacher.cs" />
-    <Compile Include="Identity.cs" />
-    <Compile Include="Lesson.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="Abonement.cs" />
+    <Compile Include="UserService.cs" />
+    <Compile Include="WeekService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MLA.DAL\MLA.DAL.csproj">
+      <Project>{baa9d1ba-d1e2-4c25-a9a3-8d5571f5ef3a}</Project>
+      <Name>MLA.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MLA.Model\MLA.Model.csproj">
+      <Project>{0f40d35d-6514-4c2a-abd0-1b47410232ad}</Project>
+      <Name>MLA.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

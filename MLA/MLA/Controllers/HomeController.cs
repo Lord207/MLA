@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MLA.DAL.Common;
+using MLA.Model.Classifier;
 
 namespace MLA.Controllers
 {
@@ -10,6 +12,12 @@ namespace MLA.Controllers
   {
     public ActionResult Index()
     {
+      //var repo = new GenericRepository<Room>(new RepoContext());
+      var repo = new GenericRepository<Room>();
+      var rooms = repo.GetAll();
+      
+      //repo.Create(new Room());
+
       return View();
     }
 

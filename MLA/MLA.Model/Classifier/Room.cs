@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace MLA.Model.Classifier
 {
-
+  /// <inheritdoc />
   /// <summary>
   /// Кабинеты
   /// </summary>
-  public class Room : Classifier
-  {
-
-
-
-  }
+  public class Room : Classifier { }
 }

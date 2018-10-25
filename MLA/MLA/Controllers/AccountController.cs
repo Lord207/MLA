@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MLA.Model;
@@ -136,37 +137,35 @@ namespace MLA.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+      [HttpPost]
+      [AllowAnonymous]
+      [ValidateAntiForgeryToken]
+      public async Task<ActionResult> Register(RegisterViewModel model)
+      {
+        if (!ModelState.IsValid) return View(model);
+        var roles = MLA.Service.UserService.GetRoles();
+        var user = new User("", new IdentityRole()){UserName = model.Email, Email = model.Email};
+        var result = await UserManager.CreateAsync(user, model.Password);
+        if (result.Succeeded){
+          await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
+          // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+          // Send an email with this link
+          // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+          // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+          // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+          return RedirectToAction("Index", "Home");
         }
 
-        //
+        AddErrors(result);
+
+        // If we got this far, something failed, redisplay form
+        return View(model);
+      }
+
+      //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
@@ -341,45 +340,41 @@ namespace MLA.Controllers
             }
         }
 
-        //
         // POST: /Account/ExternalLoginConfirmation
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
-            if (ModelState.IsValid)
-            {
-                // Get the information about the user from the external login provider
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
-            }
-
-            ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+      [HttpPost]
+      [AllowAnonymous]
+      [ValidateAntiForgeryToken]
+      public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+      {
+        if (User.Identity.IsAuthenticated){
+          return RedirectToAction("Index", "Manage");
         }
 
-        //
+        if (ModelState.IsValid){
+          // Get the information about the user from the external login provider
+          var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+          if (info == null){
+            return View("ExternalLoginFailure");
+          }
+
+          var user = new User("", new IdentityRole()){UserName = model.Email, Email = model.Email};
+          var result = await UserManager.CreateAsync(user);
+          if (result.Succeeded){
+            result = await UserManager.AddLoginAsync(user.Id, info.Login);
+            if (result.Succeeded){
+              await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+              return RedirectToLocal(returnUrl);
+            }
+          }
+
+          AddErrors(result);
+        }
+
+        ViewBag.ReturnUrl = returnUrl;
+        return View(model);
+      }
+
+      //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
